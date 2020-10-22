@@ -183,4 +183,4 @@ $(document).on('keypress', function (e) {
   }
 });
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.8f568a15.js.map
+//# sourceMappingURL=https://github.com/yt826/Navigation/blob/master/dist/main.8f568a15.js.map
