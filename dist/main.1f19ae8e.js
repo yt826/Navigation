@@ -123,19 +123,30 @@ var $last = $('li.last');
 var x = localStorage.getItem('x');
 var xObject = JSON.parse(x);
 var hashMap = xObject || [{
-  logo: '<img src="./images/csdn.jpg" alt="">',
-  logoType: 'image',
-  url: 'csdn.net'
+  logo: 'C',
+  url: 'https://csdn.net'
 }, {
-  logo: '<img src="./images/bilibili.jpg" alt="">',
-  logoType: 'image',
-  url: 'bilibili.com'
+  logo: 'B',
+  url: 'https://bilibili.com'
 }];
-$siteList.find('li:not(.last)').remove();
+
+var simplifyUrl = function simplifyUrl(url) {
+  return url.replace('https://', '').replace('http://', '').replace('www.', '').replace(/\/.*/, ''); //删除/开头的结尾，直到结尾
+};
 
 var render = function render() {
-  hashMap.forEach(function (node) {
-    var $li = $("<li>\n                <a href=\"https://www.bilibili.com/\">\n                <div class=\"site\">\n                    <div class=\"logo\">".concat(node.logo, "</div>\n                    <div class=\"link\">").concat(node.url, "</div>\n                </div></a>\n            </li>")).insertBefore($last);
+  $siteList.find('li:not(.last)').remove();
+  hashMap.forEach(function (node, index) {
+    var $li = $("<li>\n    \n                <div class=\"site\">\n                    <div class=\"logo\">".concat(node.logo, "</div>\n                    <div class=\"link\">").concat(simplifyUrl(node.url), "</div>\n                    <div class = \"close\">\n                    <svg class = \"icon\" aria-hidden=\"true\">\n                        <use xlink:href=\"#icon-shanchu\"></use>\n                    </svg>\n                    </div>\n                </div>\n            </li>")).insertBefore($last);
+    $li.on('click', function () {
+      window.open(node.url);
+      console.log(node.url);
+    });
+    $li.on('click', '.close', function (e) {
+      e.stopPropagation();
+      hashMap.splice(index, 1);
+      render();
+    });
   });
 };
 
@@ -149,7 +160,7 @@ $('.addButton').on('click', function () {
 
   console.log(url);
   hashMap.push({
-    logo: "".concat(url[8]),
+    logo: "".concat(simplifyUrl(url)[0]),
     logoType: 'text',
     url: "".concat(url)
   });
@@ -161,6 +172,16 @@ window.onbeforeunload = function () {
   var string = JSON.stringify(hashMap);
   localStorage.setItem('x', string);
 };
+
+$(document).on('keypress', function (e) {
+  var key = e.key;
+
+  for (var i = 0; i < hashMap.length; i++) {
+    if (hashMap[i].logo.toLowerCase() === key) {
+      window.open(hashMap[i].url);
+    }
+  }
+});
 },{}],"../../../../AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -189,7 +210,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56349" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64674" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
